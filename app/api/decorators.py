@@ -1,5 +1,9 @@
 # coding=utf-8
 
+"""
+Module Docstring
+"""
+
 from flask import request
 from functools import wraps
 
@@ -8,11 +12,6 @@ class BaseDecorator(object):
     """ 
     Base View to Decorators common to all Webservices.
     """
-
-    def __init__(self):
-        """Constructor
-        """
-        pass
 
     def system(f):
         @wraps(f)
