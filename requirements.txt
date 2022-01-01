@@ -1,7 +1,9 @@
 alembic==1.7.5
 click==8.0.3
+django-environ==0.8.1
 environ==1.0
 Flask==2.0.2
+flask-marshmallow==0.14.0
 Flask-Migrate==3.1.0
 Flask-SQLAlchemy==2.5.1
 greenlet==1.1.2
@@ -11,5 +13,6 @@ Mako==1.1.6
 MarkupSafe==2.0.1
 marshmallow==3.14.1
 pika==1.2.0
+six==1.16.0
 SQLAlchemy==1.4.29
 Werkzeug==2.0.2
