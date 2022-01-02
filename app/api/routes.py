@@ -1,7 +1,8 @@
 # coding=utf-8
 
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, redirect
 from app.api.decorators import BaseDecorator
+from source.processes.base import BaseProcess
 
 mod_upy = Blueprint('', __name__, url_prefix='')
 
@@ -15,7 +16,8 @@ class UpyView(object):
 
     @mod_upy.route('/', methods=['GET'])
     @BaseDecorator.system
-    def get_driver_score(data):
+    def initial(data):
+        return redirect("http://upyexplorer.com/")
         return jsonify(
                 {
                     "data": {
