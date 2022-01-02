@@ -4,9 +4,8 @@
 Module Docstring
 """
 
-from flask import Blueprint, jsonify, redirect
+from flask import Blueprint, redirect
 from app.api.decorators import BaseDecorator
-from source.processes.base import BaseProcess
 
 mod_upy = Blueprint('', __name__, url_prefix='')
 
