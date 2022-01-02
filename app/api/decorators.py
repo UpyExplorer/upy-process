@@ -10,7 +10,7 @@ from functools import wraps
 
 class BaseDecorator(object):
     """ 
-    Base View to Decorators common to all Webservices.
+    Base Decorator
     """
 
     def system(f):
