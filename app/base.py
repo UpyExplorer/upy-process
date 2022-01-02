@@ -8,6 +8,7 @@ __all__ = ['BaseRunserver']
 
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
+from app.api.routes import mod_upy
 
 
 class BaseRunserver(object):
@@ -36,6 +37,7 @@ class BaseRunserver(object):
         app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
         app.register_error_handler(404, self.page_not_found)
+        app.register_blueprint(mod_upy)
 
         db = SQLAlchemy(app)
         db.init_app(app)
