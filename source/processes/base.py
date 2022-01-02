@@ -6,10 +6,9 @@ Função responsável pela orquestração de um processo base
 
 __all__ = ['BaseProcess']
 
-import pika
-import time
+import environ
 from threading import Thread
-from flask import current_app as app
+from source.processes.rabbitmq import BaseRabbitMQ
 
 
 class BaseProcess(object):
@@ -22,44 +21,27 @@ class BaseProcess(object):
         """
         Base Constructor 
         """
-        rabbitmq_url = app.config['RABBITMQ_URL']
-
-        params = pika.URLParameters(rabbitmq_url)
-        params.socket_timeout = 5
-        connection = pika.BlockingConnection(params)
-        self.channel = connection.channel()
+        env = environ.Env()
+        self.rabbitmq = BaseRabbitMQ(rabbitmq_url=env("RABBITMQ_URL"))
 
     def initialize(self, key):
         """
         Process Initialization
         """
-        print("Process Initialization")
-        self.channel.queue_declare(queue=key, durable=True)
-        self.channel.basic_qos(prefetch_count=1)
-        self.channel.basic_consume(queue=key,on_message_callback=self.execute)
-        self.channel.start_consuming()
-
-    def execute(self, ch, method, properties, body):
-        """
-        Process Execution
-        """
-        print("Process Execution")
-        print(" [x] Received %r" % body.decode())
-        time.sleep(10)
-        print(" [x] Done")
-        ch.basic_ack(delivery_tag=method.delivery_tag)
+        channel = self.rabbitmq.channel_initialize()
+        self.rabbitmq.start_queue(channel=channel, key=key)
 
     def finalize(self, **kwargs):
         """
         Process Completion
         """
-        print("Process Completion")
+        pass
 
     def fail_finalization(self, **kwargs):
         """
         Failed Process Completion
         """
-        print("Failed Process Completion")
+        pass
 
     def run(self, key, **kwargs):
         """

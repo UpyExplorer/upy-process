@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, redirect
 from app.api.decorators import BaseDecorator
 from source.processes.base import BaseProcess
 
@@ -16,9 +16,8 @@ class UpyView(object):
 
     @mod_upy.route('/', methods=['GET'])
     @BaseDecorator.system
-    def run_process(data):
-        new_process = BaseProcess()
-        new_process.run(key='task_queue_' + data['params']['id'][0])
+    def initial(data):
+        return redirect("http://upyexplorer.com/")
         return jsonify(
                 {
                     "data": {

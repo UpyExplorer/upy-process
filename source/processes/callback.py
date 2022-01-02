@@ -20,7 +20,6 @@ class CallbackProcess(object):
         """
         Base Constructor 
         """
-        print("Process Execution")
         print(" [x] Received %r" % body.decode())
         time.sleep(10)
         print(" [x] Done")
