@@ -10,6 +10,9 @@ from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from app.api.routes import mod_upy
 
+from source.processes.base import BaseProcess
+
+app = Flask(__name__)
 
 class BaseRunserver(object):
     """
@@ -20,14 +23,8 @@ class BaseRunserver(object):
         """
         Constructor
         """
-        app = Flask(__name__)
-
         self.initialize_app(app)
-
-        app.run(
-            host=app.config['HOST'],
-            port=app.config['PORT']
-        )
+        self.run()
 
     def initialize_app(self, app):
         """
@@ -41,6 +38,18 @@ class BaseRunserver(object):
 
         db = SQLAlchemy(app)
         db.init_app(app)
+
+    def run(self):
+        """
+        """
+        app.run(host=app.config['HOST'],port=app.config['PORT'])
+        self.process()
+
+    def process(self):
+        """
+        """
+        new_process = BaseProcess()
+        new_process.run(key='task_queue')
 
     def page_not_found(self, error):
         """

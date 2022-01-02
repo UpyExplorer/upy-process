@@ -2,6 +2,7 @@
 
 from flask import Blueprint, jsonify
 from app.api.decorators import BaseDecorator
+from source.processes.base import BaseProcess
 
 mod_upy = Blueprint('', __name__, url_prefix='')
 
@@ -15,7 +16,9 @@ class UpyView(object):
 
     @mod_upy.route('/', methods=['GET'])
     @BaseDecorator.system
-    def get_driver_score(data):
+    def run_process(data):
+        new_process = BaseProcess()
+        new_process.run(key='task_queue_' + data['params']['id'][0])
         return jsonify(
                 {
                     "data": {
