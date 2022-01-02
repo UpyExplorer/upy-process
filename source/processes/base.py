@@ -49,8 +49,8 @@ class BaseProcess(object):
         """
         print("Execution")
         try:
-            t1 = Thread(target=self.initialize, kwargs={"key": key})
-            t1.start()
+            process = Thread(target=self.initialize, kwargs={"key": key})
+            process.start()
         except:
             self.fail_finalization()
         finally:
