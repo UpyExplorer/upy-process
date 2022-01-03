@@ -6,6 +6,7 @@ Runserver
 
 __all__ = ['BaseRunserver']
 
+from waitress import serve
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from app.api.routes import mod_upy
@@ -27,10 +28,15 @@ class BaseRunserver(object):
         self.initialize_app(app)
         self.process()
 
-        app.run(
-            host=app.config['HOST'],
-            port=app.config['PORT']
-        )
+        host = app.config['HOST']
+        port = app.config['PORT']
+
+        # app.run(
+        #     host=app.config['HOST'],
+        #     port=app.config['PORT']
+        # )
+
+        serve(app, host=host, port=port)
 
     def initialize_app(self, app):
         """
