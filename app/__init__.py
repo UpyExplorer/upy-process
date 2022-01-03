@@ -31,11 +31,7 @@ class BaseRunserver(object):
         host = app.config['HOST']
         port = app.config['PORT']
 
-        # app.run(
-        #     host=app.config['HOST'],
-        #     port=app.config['PORT']
-        # )
-
+        # app.run(host=host, port=port)
         serve(app, host=host, port=port)
 
     def initialize_app(self, app):
