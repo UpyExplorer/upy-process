@@ -66,17 +66,6 @@ class ControlerBase(object):
         except:
             self.db_session.rollback()
 
-            if is_new:
-                model = self.model_class(**data)
-                self.db_session.add(model)
-            else:
-                for item in data:
-                    setattr(model, item, data[item])
-                self.db_session.merge(model)
-
-            self.db_session.commit()
-            return model
-
         return None
 
     def delete(self, model_id=None):
