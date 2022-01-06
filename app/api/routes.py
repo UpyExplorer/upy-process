@@ -11,8 +11,7 @@ mod_upy = Blueprint('', __name__, url_prefix='')
 
 
 class UpyView(object):
-    """
-    Base View
+    """Base View
     """
     def __init__(self):
         super().__init__()

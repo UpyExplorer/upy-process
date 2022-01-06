@@ -6,13 +6,16 @@ Model Config
 
 from app import db, ma
 from marshmallow import fields, EXCLUDE
+from app.models.base import ModelBase
+
+
 class Base(db.Model):
 
     __abstract__  = True
 
     id = db.Column(db.Integer, primary_key=True)
 
-class WorkStation(Base):
+class WorkStation(ModelBase):
 
     __tablename__ = 'work_station'
 

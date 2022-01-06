@@ -9,8 +9,7 @@ from functools import wraps
 
 
 class BaseDecorator(object):
-    """ 
-    Base Decorator
+    """Base Decorator
     """
 
     def system(f):

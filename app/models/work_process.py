@@ -6,13 +6,10 @@ Model Config
 
 from app import db, ma
 from marshmallow import fields, EXCLUDE
-class Base(db.Model):
+from app.models.base import ModelBase
 
-    __abstract__  = True
 
-    id = db.Column(db.Integer, primary_key=True)
-
-class WorkProcess(Base):
+class WorkProcess(ModelBase):
 
     __tablename__ = 'work_process'
 
