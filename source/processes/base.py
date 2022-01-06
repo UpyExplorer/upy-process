@@ -47,7 +47,6 @@ class BaseProcess(object):
         """
         Execução
         """
-        print("Execution")
         try:
             process = Thread(target=self.initialize, kwargs={"key": key})
             process.start()
