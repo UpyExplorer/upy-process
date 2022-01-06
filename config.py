@@ -9,6 +9,6 @@ environ.Env.read_env(BASE_DIR+"/.env")
 FLASK_ENV = env("FLASK_ENV")
 
 if FLASK_ENV == 'production':
-    from app.conf.production.settings import *
+    from app.conf.production import *
 else:
-    from app.conf.development.settings import *
+    from app.conf.development import *
