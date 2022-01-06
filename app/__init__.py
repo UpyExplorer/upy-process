@@ -8,51 +8,30 @@ __all__ = ['BaseRunserver']
 
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
-from app.api.routes import mod_upy
+from flask_marshmallow import Marshmallow
 
 from source.processes.base import BaseProcess
+from app.api.routes import mod_upy
 
 
-class BaseRunserver(object):
+app = Flask(__name__)
+
+def page_not_found(self, error):
     """
-    Class that initializes the project
+    Render 404 error page
     """
+    return render_template('404.html'), 404
 
-    def __init__(self):
-        """
-        Constructor
-        """
-        app = Flask(__name__)
+app.config.from_object('config')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-        self.initialize_app(app)
-        self.process()
+app.register_error_handler(404, page_not_found)
+app.register_blueprint(mod_upy)
 
-        app.run(
-            host=app.config['HOST'],
-            port=app.config['PORT']
-        )
+db = SQLAlchemy(app)
+ma = Marshmallow(app)
+db.init_app(app)
 
-    def initialize_app(self, app):
-        """
-        Application preparation before start
-        """
-        app.config.from_object('config')
-        app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-        app.register_error_handler(404, self.page_not_found)
-        app.register_blueprint(mod_upy)
-
-        db = SQLAlchemy(app)
-        db.init_app(app)
-
-    def process(self):
-        """
-        """
-        new_process = BaseProcess()
-        new_process.run(key='task_queue')
-
-    def page_not_found(self, error):
-        """
-        Render 404 error page
-        """
-        return render_template('404.html'), 404
+from app.models.work_process import WorkProcess
+from app.models.work_station import WorkStation
+from app.models.work_user import WorkUser

@@ -1,7 +1,7 @@
 import os
 from os.path import dirname
 
-BASE_DIR = dirname(dirname(dirname(dirname(os.path.abspath(__file__)))))
+BASE_DIR = dirname(dirname(dirname(os.path.abspath(__file__))))
 
 DEBUG = os.getenv("DEBUG")
 PORT = os.getenv("PORT")
