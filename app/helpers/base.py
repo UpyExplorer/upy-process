@@ -87,4 +87,5 @@ class ControlerBase(object):
             return True
         except:
             self.db_session.rollback()
-            return False
+
+        return False
