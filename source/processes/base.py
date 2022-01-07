@@ -6,25 +6,22 @@ Module Docstring
 
 __all__ = ['BaseProcess']
 
-import environ
 from threading import Thread
-from source.processes.rabbitmq import BaseRabbitMQ
-from app.controllers.base import ControlerBase
+
 from app.models.work_user import WorkUser
 from app.models.work_station import WorkStation
 from app.models.work_process import WorkProcess
 
+from source.processes.rabbitmq import BaseRabbitMQ
 
-class BaseProcess(ControlerBase):
+
+class BaseProcess(BaseRabbitMQ):
     """BaseProcess
     """
 
-    def __init__(self, data=None):
+    def __init__(self):
         super().__init__()
-
-        env = environ.Env()
-        self.rabbitmq = BaseRabbitMQ(rabbitmq_url=env("RABBITMQ_URL"))
-        self.work_station = env("WORK_STATION")
+        self.work_station = self.env("WORK_STATION")
 
     def generate_keys(self):
         """Queue key list generation
@@ -61,13 +58,9 @@ class BaseProcess(ControlerBase):
         """
         try:
             for key in list_keys:
-                channel = self.rabbitmq.channel_initialize()
                 process = Thread(
-                    target=self.rabbitmq.start_queue,
-                    kwargs={
-                        "channel": channel,
-                        "key": key
-                    }
+                    target=self.start_queue,
+                    kwargs={"key": key}
                 )
                 process.start()
         except:
