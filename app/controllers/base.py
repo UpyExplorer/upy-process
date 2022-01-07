@@ -1,5 +1,9 @@
 # coding=utf-8
 
+"""
+Module Docstring
+"""
+
 __all__ = ['ControlerBase']
 
 from app import db
@@ -15,6 +19,23 @@ class ControlerBase(object):
         self.base_schema = None
         self.base_schemas = None
         self.db_session = db.session
+
+    def get_all(self):
+        """Returns all database information
+        Returns:
+            query_data (dict or None): Returns a dictionary or None
+        """
+        try:
+            query_data = self.model_class.query.all()
+            
+            if query_data:
+                return self.base_schemas.dump(query_data) or None
+
+        except Exception as error:
+            print(error)
+            self.db_session.rollback()
+            
+        return None
 
     def get(self, model_id=None):
         """Returns database information
@@ -66,17 +87,6 @@ class ControlerBase(object):
         except:
             self.db_session.rollback()
 
-            if is_new:
-                model = self.model_class(**data)
-                self.db_session.add(model)
-            else:
-                for item in data:
-                    setattr(model, item, data[item])
-                self.db_session.merge(model)
-
-            self.db_session.commit()
-            return model
-
         return None
 
     def delete(self, model_id=None):
@@ -98,4 +108,5 @@ class ControlerBase(object):
             return True
         except:
             self.db_session.rollback()
-            return False
+
+        return False

@@ -1,8 +1,12 @@
 # coding=utf-8
 
+"""
+Module Docstring
+"""
+
 __all__ = ['WorkProcessHelper']
 
-from app.helpers.base import ControlerBase
+from app.controllers.base import ControlerBase
 from app.models.work_process import WorkProcess, base_schema, base_schemas
 
 

@@ -1,8 +1,12 @@
 # coding=utf-8
 
+"""
+Module Docstring
+"""
+
 __all__ = ['WorkUserHelper']
 
-from app.helpers.base import ControlerBase
+from app.controllers.base import ControlerBase
 from app.models.work_user import WorkUser, base_schema, base_schemas
 
 
