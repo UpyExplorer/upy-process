@@ -1,5 +1,9 @@
 # coding=utf-8
 
+"""
+Module Docstring
+"""
+
 __all__ = ['WorkProcessHelper']
 
 from app.controllers.base import ControlerBase

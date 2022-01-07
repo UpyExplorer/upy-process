@@ -11,20 +11,17 @@ from source.processes.callback import CallbackProcess
 
 
 class BaseRabbitMQ(object):
-    """
-    BaseProcess
+    """BaseRabbitMQ
     """
     process_type = 'rabbitmq'
 
     def __init__(self, rabbitmq_url):
-        """
-        Constructor 
+        """Constructor 
         """
         self.rabbitmq_url = rabbitmq_url
 
     def channel_initialize(self):
-        """
-        Channel Initialize
+        """Channel Initialize
         """
         params = pika.URLParameters(self.rabbitmq_url)
         params.socket_timeout = 5
@@ -33,8 +30,7 @@ class BaseRabbitMQ(object):
         return connection.channel()
 
     def start_queue(self, channel, key):
-        """
-        Start Queue
+        """Start Queue
         """
         channel.queue_declare(queue=key, durable=True)
         channel.basic_qos(prefetch_count=1)

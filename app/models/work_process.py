@@ -13,34 +13,34 @@ class WorkProcess(ModelBase):
 
     __tablename__ = 'work_process'
 
-    work_user = db.Column(db.Integer, db.ForeignKey('work_user.id'), nullable=False)
-    work_station = db.Column(db.Integer, db.ForeignKey('work_station.id'), nullable=False)
+    work_user_id = db.Column(db.Integer, nullable=True)
+    work_station_id = db.Column(db.Integer, nullable=True)
     status = db.Column(db.Integer, nullable=True)
 
     def __init__(
         self,
-        work_user,
-        work_station,
+        work_user_id,
+        work_station_id,
         status=None):
 
-        self.work_user = work_user
-        self.work_station = work_station
+        self.work_user_id = work_user_id
+        self.work_station_id = work_station_id
         self.status = status
 
     def __repr__(self):
         return '<id %r>' % (self.id)
 
 class WorkProcessSchema(ma.Schema):
-    work_user = fields.Str()
-    work_station = fields.Str()
+    work_user_id = fields.Integer()
+    work_station_id = fields.Integer()
     status = fields.Integer()
 
     class Meta:
         unknown = EXCLUDE
         fields = (
             'id',
-            'work_user',
-            'work_station',
+            'work_user_id',
+            'work_station_id',
             'status'
         )
 

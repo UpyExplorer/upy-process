@@ -1,7 +1,7 @@
 # coding=utf-8
 
 """
-
+Module Docstring
 """
 
 __all__ = ['CallbackProcess']
@@ -11,14 +11,12 @@ from flask import current_app as app
 
 
 class CallbackProcess(object):
-    """
-    CallbackProcess
+    """CallbackProcess
     """
     process_type = 'callback'
 
     def __init__(self, channel, method, properties, body):
-        """
-        Base Constructor 
+        """Base Constructor 
         """
         print(" [x] Received %r" % body.decode())
         time.sleep(10)
@@ -26,13 +24,11 @@ class CallbackProcess(object):
         channel.basic_ack(delivery_tag=method.delivery_tag)
 
     def initialize(self, key):
-        """
-        Process Initialization
+        """Process Initialization
         """
         print("Process Initialization")
 
     def run(self, key, **kwargs):
-        """
-        Execução
+        """Execution
         """
         print("Execution")
