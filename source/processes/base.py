@@ -7,15 +7,16 @@ Module Docstring
 __all__ = ['BaseProcess']
 
 from threading import Thread
+from upy_rabbitmq.worker import UpyMQWorker
 
 from app.models.work_user import WorkUser
 from app.models.work_station import WorkStation
 from app.models.work_process import WorkProcess
 
-from source.processes.rabbitmq import BaseRabbitMQ
+from app.base import BaseApp
+from source.processes.callback import CallbackProcess
 
-
-class BaseProcess(BaseRabbitMQ):
+class BaseProcess(BaseApp):
     """BaseProcess
     """
 
@@ -59,8 +60,11 @@ class BaseProcess(BaseRabbitMQ):
         try:
             for key in list_keys:
                 process = Thread(
-                    target=self.start_queue,
-                    kwargs={"key": key}
+                    target=UpyMQWorker().start_queue,
+                    kwargs={
+                        "key": key,
+                        "callback": CallbackProcess
+                        }
                 )
                 process.start()
         except:

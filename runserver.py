@@ -18,6 +18,6 @@ if __name__ == "__main__":
     host = app.config['HOST']
     port = app.config['PORT']
 
-    # app.run(host=host, port=port)
-    serve(app, host=host, port=port)
+    app.run(host=host, port=port)
+    # serve(app, host=host, port=port)
 
