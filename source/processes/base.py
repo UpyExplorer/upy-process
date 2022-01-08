@@ -12,16 +12,17 @@ from app.models.work_user import WorkUser
 from app.models.work_station import WorkStation
 from app.models.work_process import WorkProcess
 
-from source.processes.rabbitmq import BaseRabbitMQ
+from app.base import BaseApp
+from upy_rabbitmq.base import UpyRabbitMQ
 
-
-class BaseProcess(BaseRabbitMQ):
+class BaseProcess(BaseApp):
     """BaseProcess
     """
 
     def __init__(self):
         super().__init__()
         self.work_station = self.env("WORK_STATION")
+        self.rabbitmq = UpyRabbitMQ(url=self.env("RABBITMQ_URL"))
 
     def generate_keys(self):
         """Queue key list generation
@@ -59,7 +60,7 @@ class BaseProcess(BaseRabbitMQ):
         try:
             for key in list_keys:
                 process = Thread(
-                    target=self.start_queue,
+                    target=self.rabbitmq.start_queue,
                     kwargs={"key": key}
                 )
                 process.start()
