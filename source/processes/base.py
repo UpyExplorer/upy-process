@@ -7,13 +7,14 @@ Module Docstring
 __all__ = ['BaseProcess']
 
 from threading import Thread
+from upy_rabbitmq.worker import UpyMQWorker
 
 from app.models.work_user import WorkUser
 from app.models.work_station import WorkStation
 from app.models.work_process import WorkProcess
 
 from app.base import BaseApp
-from upy_rabbitmq.base import UpyRabbitMQ
+from source.processes.callback import CallbackProcess
 
 class BaseProcess(BaseApp):
     """BaseProcess
@@ -22,7 +23,6 @@ class BaseProcess(BaseApp):
     def __init__(self):
         super().__init__()
         self.work_station = self.env("WORK_STATION")
-        self.rabbitmq = UpyRabbitMQ(url=self.env("RABBITMQ_URL"))
 
     def generate_keys(self):
         """Queue key list generation
@@ -60,8 +60,11 @@ class BaseProcess(BaseApp):
         try:
             for key in list_keys:
                 process = Thread(
-                    target=self.rabbitmq.start_queue,
-                    kwargs={"key": key}
+                    target=UpyMQWorker().start_queue,
+                    kwargs={
+                        "key": key,
+                        "callback": CallbackProcess
+                        }
                 )
                 process.start()
         except:
