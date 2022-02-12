@@ -5,4 +5,8 @@
 
 - https://github.com/UpyExplorer
 
-### ✔️ upy-process
+### ✔️ upy-process - Objetivo?
+- Realizar o processamento do serviços referente as integrações, basicamente
+este projeto irá estartar filas para cada usuário que está cadastrado na
+UpyExplorer para que sejam realizados as sincronizações dos registros.
+Então é nesse projeto que os processo será executado.
