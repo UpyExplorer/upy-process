@@ -15,3 +15,4 @@ Então é nesse projeto que os processos serão executados.
 - Python3.9.5
 - Flask
 - RabbitMQ
+ 
