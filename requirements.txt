@@ -2,7 +2,7 @@ alembic==1.7.5
 click==8.0.3
 django-environ==0.8.1
 environ==1.0
-Flask==2.0.2
+Flask==2.2.5
 flask-marshmallow==0.14.0
 Flask-Migrate==3.1.0
 Flask-Script==2.0.6
